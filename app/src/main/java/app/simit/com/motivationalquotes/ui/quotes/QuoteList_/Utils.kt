@@ -11,8 +11,8 @@ object Utils {
         if (null == quotes) {
             quotes = ArrayList()
             val quote1 = Quote("1", "https://i.pinimg.com/736x/e9/00/14/e900140f2e8b0c234395ec97748569de.jpg", null, null)
-            val quote3 = Quote("3", "https://thumbs.dreamstime.com/b/quote-inspirational-motivational-nquotes-sayings-life-success-nwisdom-positive-uplifting-empowering-nmotivation-144803367.jpg", null, null)
             val quote2 = Quote("2", "https://i.pinimg.com/originals/e7/2f/34/e72f34a74453946af2c6ed1c0b5a0ab1.jpg", null, null)
+            val quote3 = Quote("3", "https://thumbs.dreamstime.com/b/quote-inspirational-motivational-nquotes-sayings-life-success-nwisdom-positive-uplifting-empowering-nmotivation-144803367.jpg", null, null)
             val quote4 = Quote("4", "https://image.freepik.com/free-vector/motivational-quote-with-black-background_1020-995.jpg", null, null)
             val quote5 = Quote("5", "https://www.moritzfinedesigns.com/wp-content/uploads/2017/01/motivational-printables_difficult-roads.jpg", null, null)
             val quote6 = Quote("6", "https://image.freepik.com/free-vector/motivational-quote-background_23-2147854384.jpg", null, null)

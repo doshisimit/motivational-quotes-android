@@ -10,8 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.QuoteAdapter
 import app.simit.com.motivationalquotes.databinding.FragmentQuotesBinding
+import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.QuoteListDecoretor
 
 class QuotesFragment : Fragment() {
+    private var decoretor: QuoteListDecoretor? = null
     private lateinit var mViewModel: QuotesViewModel
     private lateinit var quoteAdapter: QuoteAdapter
     private lateinit var binding: FragmentQuotesBinding
@@ -24,8 +26,15 @@ class QuotesFragment : Fragment() {
 
         quoteAdapter = QuoteAdapter(requireContext())
         binding.allQuotesRecyclerView.adapter = quoteAdapter
-        binding.allQuotesRecyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        binding.allQuotesRecyclerView.layoutManager = layoutManager
 
+        if (decoretor != null) {
+            binding.allQuotesRecyclerView.removeItemDecoration(decoretor!!)
+        }
+        decoretor = QuoteListDecoretor(requireContext())
+        binding.allQuotesRecyclerView.addItemDecoration(decoretor!!)
 
         mViewModel.quotes.observe(viewLifecycleOwner, Observer { list ->
             if (list.isNotEmpty()) {
