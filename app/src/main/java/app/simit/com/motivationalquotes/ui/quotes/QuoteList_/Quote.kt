@@ -1,6 +1,6 @@
 package app.simit.com.motivationalquotes.ui.quotes.QuoteList_
 
-class Quote(var id: String, var imageURL: String, var hashTags: String?, var title: String?) {
+data class Quote(var id: String, var imageURL: String, var hashTags: String?, var title: String?) {
 
     override fun toString(): String {
         return "Quote{" +
