@@ -38,7 +38,7 @@ class QuoteAdapter(private val context: Context) : RecyclerView.Adapter<QuoteAda
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.i(TAG, "onBindViewHolder: " + quotes[position].imageUrl)
+        Log.i(TAG, "id: ${quotes[position]._id} url : ${quotes[position].imageUrl}")
 
         holder.image.layout(0, 0, 0, 0)
         var requestOptions: RequestOptions = RequestOptions()
