@@ -10,25 +10,36 @@ import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class QuotesViewModel : ViewModel() {
+    companion object {
+        private const val TAG: String = "QUOTES_VIEW_MODEL"
+    }
+
     private val mQuotes: MutableLiveData<List<Quote>> = MutableLiveData()
     val quotes: LiveData<List<Quote>>
         get() = mQuotes
 
     init {
+        GlobalScope.launch {
+            getQuotes()
+        }
 //        mQuotes.value = Utils.quotes
-        mQuotes.value = getQuotes()
+        GlobalScope.launch {
+            mQuotes.postValue(getQuotes())
+        }
 
     }
 
 
-    fun getQuotes():List<Quote>{
-        GlobalScope.launch(Dispatchers.IO) {
-            val response = RetrofitInstance.QuotesApi.getAllQuotes()
+        suspend fun getQuotes(): List<Quote>? {
+        val response = RetrofitInstance.QuotesApi.getAllQuotes()
+        Log.i(TAG, "getQuotes: " + response.body().toString())
             if (response.isSuccessful) {
-                val list = response.body()
-            }
+                return response.body()
+            } else {
+                return null
         }
     }
 }

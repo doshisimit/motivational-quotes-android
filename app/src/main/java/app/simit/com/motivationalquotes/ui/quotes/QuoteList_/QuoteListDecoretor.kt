@@ -5,12 +5,13 @@ import android.graphics.Rect
 import android.util.DisplayMetrics
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import app.simit.com.motivationalquotes.Utils
 
 class QuoteListDecoretor(val mContext: Context) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
 
-        val space: Int = convertDpToPixel(8)
+        val space: Int = Utils.convertDpToPixel(mContext, 8)
 
 
         val itemPosition = parent.getChildLayoutPosition(view)
@@ -32,10 +33,6 @@ class QuoteListDecoretor(val mContext: Context) : RecyclerView.ItemDecoration() 
 
     }
 
-    fun convertDpToPixel(dp: Int): Int {
-        return (dp * (mContext.resources
-                .displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
-    }
 
     fun calculateSingleWidth(
             PxMargin: Int,
