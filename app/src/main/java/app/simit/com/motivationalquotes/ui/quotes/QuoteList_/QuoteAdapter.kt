@@ -10,6 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.cardview.widget.CardView
+import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import app.simit.com.motivationalquotes.R
 import com.bumptech.glide.Glide
@@ -26,60 +29,26 @@ import java.net.URL
 import java.util.*
 
 
-class QuoteAdapter(private val context: Context) : RecyclerView.Adapter<QuoteAdapter.ViewHolder>() {
+class QuoteAdapter(private val context: Context) : PagingDataAdapter<Quote, RecyclerView.ViewHolder>(Quote_COMPARATOR) {
     companion object {
         private const val TAG: String = "QUOTE_ADAPTER"
-    }
 
-    private var quotes = ArrayList<Quote>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.quote_item, parent, false)
-        return ViewHolder(view)
-    }
+        private val Quote_COMPARATOR = object : DiffUtil.ItemCallback<Quote>() {
+            override fun areItemsTheSame(oldItem: Quote, newItem: Quote): Boolean =
+                    oldItem.imageUrl == newItem.imageUrl
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.i(TAG, "id: ${quotes[position]._id} url : ${quotes[position].imageUrl}")
-
-        holder.image.layout(0, 0, 0, 0)
-        var requestOptions: RequestOptions = RequestOptions()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .signature(ObjectKey(Date()))
-
-        Glide.with(context)
-                .asBitmap()
-                .load(quotes[position].imageUrl)
-                .dontAnimate()
-                .apply(requestOptions)
-                .into(holder.image)
-
-    }
-
-    override fun getItemCount(): Int {
-        return quotes.size
-    }
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val parent: CardView
-        val image: ImageView
-
-        init {
-            parent = itemView.findViewById(R.id.parent)
-            image = itemView.findViewById(R.id.img)
+            override fun areContentsTheSame(oldItem: Quote, newItem: Quote): Boolean =
+                    oldItem == newItem
         }
     }
 
-    fun setQuotes(quotes: List<Quote>) {
-        this.quotes = quotes as ArrayList<Quote>
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return QuoteViewHolder.create(parent)
     }
 
-    suspend fun LoadImageFromWebOperations(url: String?): Drawable? {
-        return try {
-            val `is`: InputStream = URL(url).content as InputStream
-            Drawable.createFromStream(`is`, "src name")
-        } catch (e: Exception) {
-            null
-        }
-
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val quote = getItem(position)
+        (holder as QuoteViewHolder).bind(context, quote)
     }
+
 }

@@ -8,7 +8,9 @@ import androidx.navigation.ui.NavigationUI
 import app.simit.com.motivationalquotes.R
 import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
