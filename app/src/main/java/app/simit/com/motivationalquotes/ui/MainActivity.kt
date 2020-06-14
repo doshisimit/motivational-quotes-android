@@ -6,7 +6,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import app.simit.com.motivationalquotes.R
-import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.Utils
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 

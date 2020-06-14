@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 class QuoteRepository(val quoteCalls: QuoteCalls) {
     fun getSearchResultStream(): Flow<PagingData<Quote>> {
         return Pager(
-                config = PagingConfig(pageSize = 3),
+                config = PagingConfig(pageSize = 3, enablePlaceholders = true),
                 pagingSourceFactory = { QuoteDataSource(quoteCalls) }
         ).flow
     }

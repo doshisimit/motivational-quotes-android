@@ -48,7 +48,7 @@ class QuotesFragment : Fragment() {
         quoteAdapter = QuoteAdapter(requireContext())
 
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.allQuotesRecyclerView.layoutManager = layoutManager
         binding.allQuotesRecyclerView.adapter = quoteAdapter
 
