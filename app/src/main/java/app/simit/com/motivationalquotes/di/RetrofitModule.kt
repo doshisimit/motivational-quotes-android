@@ -18,7 +18,8 @@ object RetrofitModule {
     @Provides
     @Singleton
     fun provideRetrofitInstance(@ApplicationContext mContext: Context): Retrofit {
-        val BASE_URL = "https://quiet-sierra-93508.herokuapp.com/"
+        //val BASE_URL = "https://quiet-sierra-93508.herokuapp.com/"
+        val BASE_URL = "https://afternoon-taiga-39393.herokuapp.com/"
 
         val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
