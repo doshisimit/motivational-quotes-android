@@ -1,4 +1,4 @@
-package app.simit.com.motivationalquotes.ui.settings
+package app.simit.com.motivationalquotes.ui.Home_.settings
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

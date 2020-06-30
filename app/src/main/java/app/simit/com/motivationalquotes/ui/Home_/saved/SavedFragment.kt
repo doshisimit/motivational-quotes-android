@@ -1,4 +1,4 @@
-package app.simit.com.motivationalquotes.ui.saved
+package app.simit.com.motivationalquotes.ui.Home_.saved
 
 import android.os.Bundle
 import android.view.LayoutInflater

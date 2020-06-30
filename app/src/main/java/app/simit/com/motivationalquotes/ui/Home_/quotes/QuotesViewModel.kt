@@ -1,4 +1,4 @@
-package app.simit.com.motivationalquotes.ui.quotes
+package app.simit.com.motivationalquotes.ui.Home_.quotes
 
 import android.os.Parcelable
 import android.util.Log
@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
 import app.simit.com.motivationalquotes.Api.QuoteCalls
 import app.simit.com.motivationalquotes.Utils_.Prefrence
-import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.Quote
-import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.QuoteRepository
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.Quote
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.QuoteRepository
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow

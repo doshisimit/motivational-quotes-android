@@ -1,4 +1,4 @@
-package app.simit.com.motivationalquotes.ui.quotes.QuoteList_
+package app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

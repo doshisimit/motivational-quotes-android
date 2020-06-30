@@ -1,4 +1,4 @@
-package app.simit.com.motivationalquotes.ui.quotes.QuoteList_
+package app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -19,10 +19,6 @@ class QuoteViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
     private val image: ImageView = itemView.findViewById(R.id.img)
 
     private var quote: Quote? = null
-
-    init {
-
-    }
 
     fun bind(mContext: Context, quote: Quote?) {
         if (quote != null) {

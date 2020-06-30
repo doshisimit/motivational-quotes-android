@@ -1,6 +1,6 @@
 package app.simit.com.motivationalquotes.Api
 
-import app.simit.com.motivationalquotes.ui.quotes.QuoteList_.Quote
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.Quote
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
