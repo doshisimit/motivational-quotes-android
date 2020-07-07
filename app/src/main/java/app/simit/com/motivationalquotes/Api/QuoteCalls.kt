@@ -11,4 +11,7 @@ interface QuoteCalls {
     @GET("quotes/")
     suspend fun getAllQuotes(@Query("page") page: Int, @Query("limit") limit: Int): List<Quote>
 
+    @GET
+    suspend fun getSearchQuotes(@Url url: String): List<Quote>
+
 }

@@ -44,11 +44,19 @@ class QuotesViewModel(val mState: SavedStateHandle) : ViewModel() {
     fun setService(quoteCallService: QuoteCalls) {
         quoteCalls = quoteCallService
         repo = QuoteRepository(quoteCalls)
-        currentSearchResult = repo.getSearchResultStream()
+        currentSearchResult = repo.getAllQuote()
     }
 
     fun setQuotePos(Pos: Parcelable?) {
         mState.set(QUOTE_POS, Pos)
+    }
+
+    fun searchQuote(query: String) {
+        this.repo.let {
+            Log.i(TAG, "searchQuote: "+query)
+            currentSearchResult = it.getSearchResultStream(query)
+        }
+
     }
 
 }
