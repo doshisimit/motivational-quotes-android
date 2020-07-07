@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "350531922267",
+    "firebase_url": "https://motivational-quotes-23894.firebaseio.com",
+    "project_id": "motivational-quotes-23894",
+    "storage_bucket": "motivational-quotes-23894.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350531922267:android:f3cc397af4804152bf927e",
+        "android_client_info": {
+          "package_name": "app.simit.com.motivationalquotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350531922267-7e97db705d9u636cuvi3k35b715ekaj6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.simit.com.motivationalquotes",
+            "certificate_hash": "fc7e1a5e60db0ab5d4ad868e4ee58545ab9d92f8"
+          }
+        },
+        {
+          "client_id": "350531922267-a82lvfbvaa2ahuf3terp5js3pvf2656j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx1AlFMOAYmUwChlonoKWRaz_ewDX6mlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350531922267-a82lvfbvaa2ahuf3terp5js3pvf2656j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350531922267:android:99020ffea7043fe3bf927e",
+        "android_client_info": {
+          "package_name": "com.tmac.motivationalQuotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "350531922267-a82lvfbvaa2ahuf3terp5js3pvf2656j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDx1AlFMOAYmUwChlonoKWRaz_ewDX6mlM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "350531922267-a82lvfbvaa2ahuf3terp5js3pvf2656j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

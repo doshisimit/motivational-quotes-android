@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="app.simit.com.motivationalquotes.ui.quotes.QuotesFragment"
+        android:name="app.simit.com.motivationalquotes.ui.Home_.quotes.QuotesFragment"
         android:label="@string/title_quotes"
         tools:layout="@layout/fragment_quotes" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="app.simit.com.motivationalquotes.ui.saved.SavedFragment"
+        android:name="app.simit.com.motivationalquotes.ui.Home_.saved.SavedFragment"
         android:label="@string/title_saved"
         tools:layout="@layout/fragment_saved" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="app.simit.com.motivationalquotes.ui.settings.SettingsFragment"
+        android:name="app.simit.com.motivationalquotes.ui.Home_.settings.SettingsFragment"
         android:label="@string/title_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>
