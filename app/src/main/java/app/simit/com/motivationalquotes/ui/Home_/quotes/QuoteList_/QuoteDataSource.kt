@@ -21,13 +21,15 @@ class QuoteDataSource(val quoteCalls: QuoteCalls) : PagingSource<Int, Quote>() {
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Quote> {
+        val nextPageNumber = params.key ?: 1
+
         if (query != null) {
 
             return try {
 
                 val nextPageNumber = params.key ?: 1
                 Log.i(TAG, "load page number: " + nextPageNumber)
-                val response = quoteCalls.getSearchQuotes("quotes/search/" + query)
+                val response = quoteCalls.getSearchQuotes("quotes/search/" + query + "?page=" + nextPageNumber + "&limit=5")
                 val array = JSONArray(response)
                 Log.i(TAG, "load content: " + array.length())
 
@@ -47,7 +49,6 @@ class QuoteDataSource(val quoteCalls: QuoteCalls) : PagingSource<Int, Quote>() {
 
             return try {
 
-                val nextPageNumber = params.key ?: 1
                 Log.i(TAG, "load page number: " + nextPageNumber)
                 val response = quoteCalls.getAllQuotes(nextPageNumber, 5)
                 val array = JSONArray(response)

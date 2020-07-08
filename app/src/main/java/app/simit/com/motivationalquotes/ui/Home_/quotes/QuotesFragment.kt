@@ -53,6 +53,17 @@ class QuotesFragment() : Fragment() {
 
     }
 
+    public fun defaultList() {
+        mViewModel.setService(quoteCalls)
+
+        RetriveJob?.cancel()
+        RetriveJob = lifecycleScope.launch {
+            mViewModel.getQuotes()?.collectLatest {
+                quoteAdapter.submitData(it)
+            }
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?, savedInstanceState: Bundle?): View? {
         Log.i(TAG, "onCreateView: ")

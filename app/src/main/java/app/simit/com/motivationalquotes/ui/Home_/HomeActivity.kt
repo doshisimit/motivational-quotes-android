@@ -1,9 +1,15 @@
 package app.simit.com.motivationalquotes.ui.Home_
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
@@ -13,9 +19,9 @@ import app.simit.com.motivationalquotes.databinding.ActivityHomeBinding
 import app.simit.com.motivationalquotes.ui.Home_.quotes.QuotesFragment
 import app.simit.com.motivationalquotes.ui.Home_.saved.SavedFragment
 import app.simit.com.motivationalquotes.ui.Home_.settings.SettingsFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -30,8 +36,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
-        binding.topAppBar.setTitle("")
-        setSupportActionBar(binding.topAppBar)
 
 //        Utils.initQuotes()
 
@@ -74,28 +78,39 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-    }
+        binding.searchEt.setEndIconOnClickListener {
+            binding.searchEt.editText!!.text.clear()
+            binding.imageView2.performClick()
+            hideKeyboard(this)
+            if (active is QuotesFragment) {
+                fragment1.defaultList()
+            }
+        }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.search_option, menu)
-        val item: MenuItem = menu!!.findItem(R.id.app_bar_search)
-        val searchView: SearchView = item.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-//                Snackbar.make(binding.container, "Query : " + query, Snackbar.LENGTH_LONG).show()
-                if (active is QuotesFragment) {
-                    query?.let { fragment1.SearchQuery(it) }
+        binding.searchEt.editText!!.setOnEditorActionListener { v, actionId, event ->
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                if (!binding.searchEt.editText!!.text.isEmpty()) {
+                    if (active is QuotesFragment) {
+                        binding.searchEt.editText!!.text.toString()?.let { fragment1.SearchQuery(it) }
+                    }
+                } else {
+                    Snackbar.make(binding.root, "Enter a keyword to search", Snackbar.LENGTH_LONG).show()
                 }
-                return false
             }
+            return@setOnEditorActionListener false
+        }
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-
-                return false
-            }
-        })
-
-        return super.onCreateOptionsMenu(menu)
     }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        //Find the currently focused view, so we can grab the correct window token from it.
+        var view: View? = activity.currentFocus
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0)
+    }
+
 }
