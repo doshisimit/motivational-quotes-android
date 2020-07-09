@@ -37,13 +37,13 @@
                         android:layout_height="match_parent"
                         android:hint="@string/search_hint"
                         app:endIconDrawable="@drawable/ic_baseline_close_24"
-                        app:endIconMode="custom">
+                        app:endIconMode="clear_text"
+                        app:startIconDrawable="@drawable/ic_baseline_keyboard_backspace_24">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/textInputEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:focusableInTouchMode="true"
                             android:paddingStart="16dp"
                             android:singleLine="true" />
                     </com.google.android.material.textfield.TextInputLayout>

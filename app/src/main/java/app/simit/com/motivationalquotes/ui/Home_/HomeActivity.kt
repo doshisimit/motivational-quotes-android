@@ -5,13 +5,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import app.simit.com.motivationalquotes.R
@@ -31,6 +29,7 @@ class HomeActivity : AppCompatActivity() {
     val fragment3: Fragment = SettingsFragment()
     val fm = supportFragmentManager
     var active: Fragment = fragment1
+    var isSearch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,20 +77,27 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
-        binding.searchEt.setEndIconOnClickListener {
+
+        binding.searchEt.setStartIconOnClickListener {
             binding.searchEt.editText!!.text.clear()
             binding.imageView2.performClick()
             hideKeyboard(this)
             if (active is QuotesFragment) {
-                fragment1.defaultList()
+                if (isSearch) {
+                    isSearch = false
+                    fragment1.defaultList()
+                }
             }
         }
 
         binding.searchEt.editText!!.setOnEditorActionListener { v, actionId, event ->
             if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                 if (!binding.searchEt.editText!!.text.isEmpty()) {
+                    isSearch = true
                     if (active is QuotesFragment) {
+
                         binding.searchEt.editText!!.text.toString()?.let { fragment1.SearchQuery(it) }
+
                     }
                 } else {
                     Snackbar.make(binding.root, "Enter a keyword to search", Snackbar.LENGTH_LONG).show()

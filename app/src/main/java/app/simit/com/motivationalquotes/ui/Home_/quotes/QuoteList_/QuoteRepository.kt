@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.Flow
 class QuoteRepository(val quoteCalls: QuoteCalls) {
     fun getSearchResultStream(query: String): Flow<PagingData<Quote>> {
         return Pager(
-                config = PagingConfig(pageSize = 5),
+                config = PagingConfig(pageSize = DEFAULT_BUFFER_SIZE),
                 pagingSourceFactory = { QuoteDataSource(quoteCalls, query) }
         ).flow
     }
 
     fun getAllQuote(): Flow<PagingData<Quote>> {
         return Pager(
-                config = PagingConfig(pageSize = 5),
+                config = PagingConfig(pageSize = DEFAULT_BUFFER_SIZE),
                 pagingSourceFactory = { QuoteDataSource(quoteCalls) }
         ).flow
     }

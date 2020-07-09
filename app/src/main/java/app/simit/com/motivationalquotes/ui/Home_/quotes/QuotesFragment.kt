@@ -5,9 +5,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import app.simit.com.motivationalquotes.Api.QuoteCalls
@@ -41,12 +43,15 @@ class QuotesFragment() : Fragment() {
 
 
     public fun SearchQuery(query: String) {
+
         Log.i(TAG, "SearchQuery: " + query)
         mViewModel.searchQuote(query)
-
         RetriveJob?.cancel()
         RetriveJob = lifecycleScope.launch {
             mViewModel.getQuotes()?.collectLatest {
+                quoteAdapter = QuoteAdapter(requireContext())
+                binding.allQuotesRecyclerView.adapter = quoteAdapter
+                setEmptyState()
                 quoteAdapter.submitData(it)
             }
         }
@@ -54,13 +59,28 @@ class QuotesFragment() : Fragment() {
     }
 
     public fun defaultList() {
+
         mViewModel.setService(quoteCalls)
 
         RetriveJob?.cancel()
         RetriveJob = lifecycleScope.launch {
             mViewModel.getQuotes()?.collectLatest {
                 quoteAdapter.submitData(it)
+
             }
+        }
+    }
+
+    private fun setEmptyState() {
+        quoteAdapter.addLoadStateListener {
+
+            // swipeRefreshLayout displays whether refresh is occurring
+            binding.swipeRefreshLayout.isRefreshing = it.refresh is LoadState.Loading
+
+            // show an empty state over the list when loading initially, before items are loaded
+            binding.emptyState.isVisible = quoteAdapter.itemCount == 0
+
+            Log.i(TAG, "setEmptyState: " + quoteAdapter.itemCount)
         }
     }
 
@@ -75,13 +95,14 @@ class QuotesFragment() : Fragment() {
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         binding.allQuotesRecyclerView.layoutManager = layoutManager
         binding.allQuotesRecyclerView.adapter = quoteAdapter
+        setEmptyState()
 
         if (decoretor != null) {
             binding.allQuotesRecyclerView.removeItemDecoration(decoretor!!)
         }
         decoretor = QuoteListDecoretor(requireContext())
         binding.allQuotesRecyclerView.addItemDecoration(decoretor!!)
-
+    
         RetriveJob?.cancel()
         RetriveJob = lifecycleScope.launch {
             mViewModel.getQuotes()?.collectLatest {
@@ -89,16 +110,10 @@ class QuotesFragment() : Fragment() {
             }
         }
 
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            quoteAdapter.refresh()
+        }
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onStop() {
-        super.onStop()
     }
 
     companion object {

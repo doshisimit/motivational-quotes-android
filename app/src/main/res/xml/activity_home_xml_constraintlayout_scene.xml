@@ -5,7 +5,7 @@
     <Transition
         motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="300">
         <KeyFrameSet></KeyFrameSet>
         <OnClick
             motion:clickAction="toggle"
@@ -16,7 +16,7 @@
 
         <Constraint
             android:id="@+id/search_et"
-            android:visibility="gone" />
+            android:visibility="invisible" />
         <Constraint
             android:id="@+id/imageView"
             android:visibility="visible"
@@ -36,16 +36,6 @@
             android:layout_marginEnd="16dp"
             android:layout_width="23dp"
             android:layout_height="23dp" />
-        <Constraint
-            android:id="@+id/search_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
-        <Constraint
-            android:id="@+id/search_et"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
