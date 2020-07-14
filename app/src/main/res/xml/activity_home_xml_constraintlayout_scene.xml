@@ -9,7 +9,7 @@
         <KeyFrameSet></KeyFrameSet>
         <OnClick
             motion:clickAction="toggle"
-            motion:targetId="@id/imageView2" />
+            motion:targetId="@id/Search_btn" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -27,7 +27,7 @@
             android:layout_marginStart="16dp"
             android:layout_width="wrap_content" />
         <Constraint
-            android:id="@+id/imageView2"
+            android:id="@+id/Search_btn"
             android:visibility="visible"
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintBottom_toBottomOf="parent"
@@ -48,7 +48,7 @@
             android:id="@+id/imageView"
             android:visibility="gone" />
         <Constraint
-            android:id="@+id/imageView2"
+            android:id="@+id/Search_btn"
             android:visibility="gone" />
     </ConstraintSet>
 </MotionScene>

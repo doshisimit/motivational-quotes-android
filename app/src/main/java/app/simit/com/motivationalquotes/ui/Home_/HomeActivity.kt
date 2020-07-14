@@ -55,17 +55,29 @@ class HomeActivity : AppCompatActivity() {
 
             when (it.itemId) {
                 R.id.navigation_home -> {
+                    binding.appBarLayout.visibility = View.VISIBLE
+                    binding.appBarLayout2.visibility = View.GONE
+
+                    Log.i("NAV_CLICK", "onCreate: FRAGMENT 1")
                     fm.beginTransaction().hide(active).show(fragment1).commit()
                     active = fragment1
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.navigation_dashboard -> {
+                    binding.appBarLayout.visibility = View.INVISIBLE
+                    binding.appBarLayout2.visibility = View.VISIBLE
+
+                    Log.i("NAV_CLICK", "onCreate: FRAGMENT 2")
                     fm.beginTransaction().hide(active).show(fragment2).commit()
                     active = fragment2
                     return@setOnNavigationItemSelectedListener true
                 }
 
                 R.id.navigation_notifications -> {
+                    binding.appBarLayout.visibility = View.INVISIBLE
+                    binding.appBarLayout2.visibility = View.VISIBLE
+                    
+                    Log.i("NAV_CLICK", "onCreate: FRAGMENT 3")
                     fm.beginTransaction().hide(active).show(fragment3).commit()
                     active = fragment3
                     return@setOnNavigationItemSelectedListener true
@@ -80,7 +92,7 @@ class HomeActivity : AppCompatActivity() {
 
         binding.searchEt.setStartIconOnClickListener {
             binding.searchEt.editText!!.text.clear()
-            binding.imageView2.performClick()
+            binding.SearchBtn.performClick()
             hideKeyboard(this)
             if (active is QuotesFragment) {
                 if (isSearch) {
