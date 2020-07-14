@@ -1,5 +1,6 @@
 package app.simit.com.motivationalquotes.ui.Home_.quotes
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,8 +14,12 @@ import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import app.simit.com.motivationalquotes.Api.QuoteCalls
+import app.simit.com.motivationalquotes.R
 import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.QuoteAdapter
 import app.simit.com.motivationalquotes.databinding.FragmentQuotesBinding
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteDetail_.QuoteDetailActivity
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.Quote
+import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.QuoteClickListener
 import app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_.QuoteListDecoretor
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -49,13 +54,23 @@ class QuotesFragment() : Fragment() {
         RetriveJob?.cancel()
         RetriveJob = lifecycleScope.launch {
             mViewModel.getQuotes()?.collectLatest {
-                quoteAdapter = QuoteAdapter(requireContext())
+                quoteAdapter = QuoteAdapter(requireContext(), object : QuoteClickListener {
+                    override fun getClickQuote(quote: String) {
+                        instentTheQuote(quote)
+                    }
+                })
                 binding.allQuotesRecyclerView.adapter = quoteAdapter
                 setEmptyState()
                 quoteAdapter.submitData(it)
             }
         }
 
+    }
+
+    private fun instentTheQuote(quote: String) {
+        val intent = Intent(requireContext(), QuoteDetailActivity::class.java)
+        intent.putExtra(getString(R.string.quote), quote)
+        startActivity(intent)
     }
 
     public fun defaultList() {
@@ -89,7 +104,11 @@ class QuotesFragment() : Fragment() {
         Log.i(TAG, "onCreateView: ")
         binding = FragmentQuotesBinding.inflate(inflater, container, false)
 
-        quoteAdapter = QuoteAdapter(requireContext())
+        quoteAdapter = QuoteAdapter(requireContext(), object : QuoteClickListener {
+            override fun getClickQuote(quote: String) {
+                instentTheQuote(quote)
+            }
+        })
         quoteAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         val layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
@@ -102,7 +121,7 @@ class QuotesFragment() : Fragment() {
         }
         decoretor = QuoteListDecoretor(requireContext())
         binding.allQuotesRecyclerView.addItemDecoration(decoretor!!)
-    
+
         RetriveJob?.cancel()
         RetriveJob = lifecycleScope.launch {
             mViewModel.getQuotes()?.collectLatest {

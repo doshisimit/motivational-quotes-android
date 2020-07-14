@@ -31,7 +31,7 @@ import java.net.URL
 import java.util.*
 
 
-class QuoteAdapter(private val context: Context) : PagingDataAdapter<Quote, RecyclerView.ViewHolder>(Quote_COMPARATOR) {
+class QuoteAdapter(private val context: Context, private val listener: QuoteClickListener) : PagingDataAdapter<Quote, RecyclerView.ViewHolder>(Quote_COMPARATOR) {
     companion object {
         private const val TAG: String = "QUOTE_ADAPTER"
 
@@ -50,7 +50,7 @@ class QuoteAdapter(private val context: Context) : PagingDataAdapter<Quote, Recy
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val quote = getItem(position)
-        (holder as QuoteViewHolder).bind(context, quote)
+        (holder as QuoteViewHolder).bind(context, quote,listener)
     }
 
 }

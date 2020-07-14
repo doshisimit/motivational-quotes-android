@@ -12,15 +12,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class QuoteViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
 
     private val parent: CardView = itemView.findViewById(R.id.parent)
     private val image: ImageView = itemView.findViewById(R.id.img)
+    private val intentBtn: FloatingActionButton = itemView.findViewById(R.id.btnView)
 
     private var quote: Quote? = null
 
-    fun bind(mContext: Context, quote: Quote?) {
+    fun bind(mContext: Context, quote: Quote?, listener: QuoteClickListener) {
         if (quote != null) {
             image.layout(0, 0, 0, 0)
             var requestOptions: RequestOptions = RequestOptions()
@@ -35,6 +37,10 @@ class QuoteViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview) {
                     .dontAnimate()
                     .apply(requestOptions)
                     .into(image)
+            intentBtn.setOnClickListener {
+                listener.getClickQuote(quote.toString())
+            }
+
         } else {
             // TODO: 6/9/2020 loading code
         }
