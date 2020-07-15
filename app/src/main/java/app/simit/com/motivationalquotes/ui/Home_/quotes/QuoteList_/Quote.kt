@@ -1,5 +1,6 @@
 package app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteList_
 
+import org.json.JSONException
 import org.json.JSONObject
 
 data class Quote(val isApproved: Boolean, val _id: String, val title: String, val imageUrl: String, val hashTags: String, val date: String, val __v: Int) {
@@ -21,14 +22,19 @@ data class Quote(val isApproved: Boolean, val _id: String, val title: String, va
     companion object {
         fun toQuote(jstring: String): Quote {
             var json = JSONObject(jstring)
-            
+            val _id = if (json.isNull("_id")) "No id" else json.getString("_id")
+            val _title = if (json.isNull("title")) "No title" else json.getString("title")
+            val _image = if (json.isNull("imageUrl")) "No image" else json.getString("imageUrl")
+            val _hastag = if (json.isNull("hashTags")) "No hashtag" else json.getString("hashTags")
+            val _date = if (json.isNull("date")) "No date" else json.getString("date")
+
             return Quote(
                     json.getBoolean("isApproved"),
-                    json.getString("_id"),
-                    json.getString("title"),
-                    json.getString("imageUrl"),
-                    json.getString("hashTags"),
-                    json.getString("date"),
+                    _id,
+                    _title,
+                    _image,
+                    _hastag,
+                    _date,
                     json.getInt("__v")
             )
         }
