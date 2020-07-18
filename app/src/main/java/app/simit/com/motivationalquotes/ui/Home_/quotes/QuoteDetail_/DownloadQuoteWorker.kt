@@ -11,7 +11,6 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 
-
 class DownloadQuoteWorker(val mContext: Context, val mParams: WorkerParameters) : Worker(mContext, mParams) {
     companion object {
         const val URL = "image_url"
@@ -22,6 +21,7 @@ class DownloadQuoteWorker(val mContext: Context, val mParams: WorkerParameters) 
     override fun doWork(): Result {
 
         try {
+
             val request = DownloadManager.Request(Uri.parse(inputData.getString(URL)))
             request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI or DownloadManager.Request.NETWORK_MOBILE)
             request.setTitle(inputData.getString(TITLE))
@@ -38,6 +38,7 @@ class DownloadQuoteWorker(val mContext: Context, val mParams: WorkerParameters) 
             //...set the output, and we're done!
             val output: Data = workDataOf(KEY_RESULT to 0)
             return Result.success(output)
+
         } catch (e: Exception) {
             val output: Data = workDataOf(KEY_RESULT to -1)
             return Result.failure(output)

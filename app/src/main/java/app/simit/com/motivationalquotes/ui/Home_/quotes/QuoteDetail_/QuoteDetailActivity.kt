@@ -1,24 +1,36 @@
 package app.simit.com.motivationalquotes.ui.Home_.quotes.QuoteDetail_
 
 import android.Manifest
-import androidx.appcompat.app.AppCompatActivity
+import android.R.attr.label
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.work.*
 import app.simit.com.motivationalquotes.R
+import app.simit.com.motivationalquotes.data.dao.QuoteDao
 import app.simit.com.motivationalquotes.databinding.ActivityQuoteDetailBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.signature.ObjectKey
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class QuoteDetailActivity : AppCompatActivity(), EasyPermissions.RationaleCallbacks,
         EasyPermissions.PermissionCallbacks {
     companion object {
@@ -29,6 +41,9 @@ class QuoteDetailActivity : AppCompatActivity(), EasyPermissions.RationaleCallba
     private lateinit var viewModel: QuoteDetailViewModel
     private var fab_open = false
 
+    @Inject
+    lateinit var quoteDao: QuoteDao
+    private var BookMarkJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +119,6 @@ class QuoteDetailActivity : AppCompatActivity(), EasyPermissions.RationaleCallba
                         Snackbar.make(binding.root, "Download failed check your internet connection", Snackbar.LENGTH_LONG).show()
                     }
                 }
-
             })
 
         } else {
@@ -133,13 +147,11 @@ class QuoteDetailActivity : AppCompatActivity(), EasyPermissions.RationaleCallba
         if (visiblility == View.GONE) {
             binding.fabCopy.hide()
             binding.fabFav.hide()
-            binding.fabHashtag.hide()
             binding.fabSaveBtn.hide()
             binding.fabShare.hide()
         } else {
             binding.fabCopy.show()
             binding.fabFav.show()
-            binding.fabHashtag.show()
             binding.fabSaveBtn.show()
             binding.fabShare.show()
         }
@@ -168,6 +180,23 @@ class QuoteDetailActivity : AppCompatActivity(), EasyPermissions.RationaleCallba
                     Snackbar.make(binding.root, "Quote image url not found", Snackbar.LENGTH_LONG).show()
                 } else {
                     checkForPermission(it.imageUrl, it.title)
+                }
+            }
+
+            binding.fabCopy.setOnClickListener { view ->
+                val clipboard: ClipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("quote", it.title + "-" + it.hashTags)
+                clipboard.setPrimaryClip(clip)
+
+                binding.FabOptionBtn.performClick()
+                Snackbar.make(binding.root, "Quote is copied", Snackbar.LENGTH_LONG).show()
+            }
+
+            binding.fabFav.setOnClickListener { view ->
+                BookMarkJob?.cancel()
+                BookMarkJob = lifecycleScope.launch {
+                    viewModel.boomarkQuote(it, quoteDao)
+                    Snackbar.make(binding.root, "Quote is saved", Snackbar.LENGTH_LONG).show()
                 }
             }
         })

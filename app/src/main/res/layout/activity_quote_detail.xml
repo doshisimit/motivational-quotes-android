@@ -70,6 +70,18 @@
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
 
+            <ImageView
+                android:id="@+id/watermark"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="8dp"
+                android:padding="200dp"
+                android:src="@drawable/ic_quote"
+                app:layout_constraintBottom_toBottomOf="@+id/quote_preview_IV"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/quote_preview_IV"
+                app:layout_constraintTop_toTopOf="@+id/quote_preview_IV" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
@@ -81,7 +93,9 @@
                     android:layout_height="match_parent"
                     android:background="#50ffffff"
                     android:clickable="true"
-                    android:focusable="true">
+                    android:focusable="true"
+                    tools:layout_editor_absoluteX="-177dp"
+                    tools:layout_editor_absoluteY="-29dp">
 
                 </FrameLayout>
 
@@ -111,19 +125,6 @@
                     app:tint="@color/colorPrimary" />
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_hashtag"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:clickable="true"
-                    app:fabSize="mini"
-                    app:layout_constraintBottom_toTopOf="@+id/fab_copy"
-                    app:layout_constraintEnd_toEndOf="@+id/fab_copy"
-                    app:layout_constraintStart_toStartOf="@+id/fab_copy"
-                    app:srcCompat="@drawable/ic_hashtag"
-                    app:tint="@color/colorPrimary" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab_save_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -143,9 +144,9 @@
                     android:layout_marginBottom="8dp"
                     android:clickable="true"
                     app:fabSize="mini"
-                    app:layout_constraintBottom_toTopOf="@+id/fab_hashtag"
-                    app:layout_constraintEnd_toEndOf="@+id/fab_hashtag"
-                    app:layout_constraintStart_toStartOf="@+id/fab_hashtag"
+                    app:layout_constraintBottom_toTopOf="@+id/fab_copy"
+                    app:layout_constraintEnd_toEndOf="@+id/fab_copy"
+                    app:layout_constraintStart_toStartOf="@+id/fab_copy"
                     app:srcCompat="@drawable/ic_baseline_bookmark_border_24"
                     app:tint="@color/colorPrimary" />
 
